@@ -79,10 +79,21 @@ length(repos)
 
 ```{r}
 df_repos = data.frame(id=c(), name=c(), 
-                      stars=c(), created_at=c())
+                      stars=c(), created_at=c(),
+                      description=c(), language=c())
+conv_null = function(x){
+  return (ifelse(is.null(x), 'Unknown', x))
+}
+
+
 for (repo in repos){
-  curr_row = list(id=repo$id, name=repo$name,
-                  stars=repo$stargazers_count, created_at=repo$created_at)
+  curr_row = list(id=conv_null(repo$id),
+                  name=conv_null(repo$name),
+                  stars=conv_null(repo$stargazers_count),
+                  created_at=conv_null(repo$created_at),
+                  language=conv_null(repo$language),
+                  description=conv_null(repo$description))
+  print(curr_row)
   df_repos = rbind(df_repos, curr_row, stringsAsFactors=F)
 }
 df_repos
